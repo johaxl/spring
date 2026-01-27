@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
-<title>Cuentas</title>
+<title>Accounts</title>
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
 <link rel="stylesheet" href="https://cdn.datatables.net/1.13.6/css/dataTables.bootstrap5.min.css">
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
@@ -9,7 +9,7 @@
 
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
   <div class="container-fluid">
-    <a class="navbar-brand" href="#">Banco UTC</a>
+    <a class="navbar-brand" href="#">UTC Bank</a>
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" 
         aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
@@ -17,22 +17,23 @@
     <div class="collapse navbar-collapse" id="navbarNav">
       <ul class="navbar-nav">
         <li class="nav-item">
-          <a class="nav-link" href="/clientes"><i class="bi bi-people"></i> Clientes</a>
+          <a class="nav-link" href="/clientes"><i class="bi bi-people"></i> Clients</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link active" aria-current="page" href="/cuentas"><i class="bi bi-wallet2"></i> Cuentas</a>
+          <a class="nav-link active" aria-current="page" href="/cuentas"><i class="bi bi-wallet2"></i> Accounts</a>
         </li>
       </ul>
     </div>
   </div>
 </nav>
+
 <body class="bg-light">
 
 <div class="container mt-5">
     <div class="d-flex justify-content-between mb-3">
-        <h3><i class="bi bi-wallet2"></i> Cuentas</h3>
+        <h3><i class="bi bi-wallet2"></i> Accounts</h3>
         <a href="/cuentas/nuevo" class="btn btn-dark">
-            <i class="bi bi-plus-circle"></i> Nuevo
+            <i class="bi bi-plus-circle"></i> New
         </a>
     </div>
 
@@ -40,11 +41,11 @@
         <thead class="table-dark">
             <tr>
                 <th>ID</th>
-                <th>Numero</th>
-                <th>Tipo</th>
-                <th>Saldo</th>
-                <th>Cliente</th>
-                <th width="150">Acciones</th>
+                <th>Number</th>
+                <th>Type</th>
+                <th>Balance</th>
+                <th>Client</th>
+                <th width="150">Actions</th>
             </tr>
         </thead>
         <tbody>
@@ -56,9 +57,9 @@
                 <td th:text="${c.cliente.nombre}"></td>
                 <td>
                     <button class="btn btn-warning btn-sm" 
-                            th:onclick="'editar(' + ${c.id} + ')'"><i class="bi bi-pencil"></i></button>
+                            th:onclick="'edit(' + ${c.id} + ')'"><i class="bi bi-pencil"></i></button>
                     <button class="btn btn-danger btn-sm" 
-                            th:onclick="'eliminar(' + ${c.id} + ')'"><i class="bi bi-trash"></i></button>
+                            th:onclick="'deleteAccount(' + ${c.id} + ')'"><i class="bi bi-trash"></i></button>
                 </td>
             </tr>
         </tbody>
@@ -72,28 +73,28 @@
 
 <script>
 $(document).ready(function() {
-    $('#tabla').DataTable({ language: { url: "//cdn.datatables.net/plug-ins/1.13.6/i18n/es-ES.json" } });
+    $('#tabla').DataTable({ language: { url: "//cdn.datatables.net/plug-ins/1.13.6/i18n/en-GB.json" } });
 });
 
-function eliminar(id) {
+function deleteAccount(id) {
     Swal.fire({
-        title: '¿Eliminar?',
-        text: 'No se puede deshacer',
+        title: 'Delete?',
+        text: 'This action cannot be undone',
         icon: 'warning',
         showCancelButton: true,
-        confirmButtonText: 'Sí',
+        confirmButtonText: 'Yes',
         cancelButtonText: 'No'
     }).then((r) => { if (r.isConfirmed) window.location = '/cuentas/eliminar/' + id; });
 }
 
-function editar(id) {
+function edit(id) {
     Swal.fire({
-        title: '¿Deseas editar?',
-        text: 'Se abrirá el formulario de edición',
+        title: 'Do you want to edit?',
+        text: 'The edit form will open',
         icon: 'question',
         showCancelButton: true,
-        confirmButtonText: 'Sí, editar',
-        cancelButtonText: 'Cancelar'
+        confirmButtonText: 'Yes, edit',
+        cancelButtonText: 'Cancel'
     }).then((r) => { if (r.isConfirmed) window.location = '/cuentas/editar/' + id; });
 }
 </script>
@@ -101,7 +102,7 @@ function editar(id) {
 <script th:if="${mensaje}">
 Swal.fire({
     icon: '[[${tipo}]]',
-    title: 'ALERTA',
+    title: 'ALERT',
     text: '[[${mensaje}]]',
     timer: 2000,
     showConfirmButton: false
