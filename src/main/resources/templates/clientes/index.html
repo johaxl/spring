@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Clientes</title>
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.13.6/css/dataTables.bootstrap5.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
+</head>
+<body class="bg-light">
+
+<div class="container mt-5">
+
+    <div class="d-flex justify-content-between mb-3">
+        <h3><i class="bi bi-people"></i> Clientes</h3>
+        <a href="/clientes/nuevo" class="btn btn-primary">
+            <i class="bi bi-plus-circle"></i> Nuevo
+        </a>
+    </div>
+
+    <table id="tabla" class="table table-striped">
+        <thead class="table-dark">
+            <tr>
+                <th>ID</th>
+                <th>Nombre</th>
+                <th>Email</th>
+                <th width="150">Acciones</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr th:each="c : ${listaClientes}">
+                <td th:text="${c.id}"></td>
+                <td th:text="${c.nombre}"></td>
+                <td th:text="${c.email}"></td>
+                <td>
+					<button class="btn btn-warning btn-sm"
+					    th:onclick="'editar(' + ${c.id} + ')'">
+					    <i class="bi bi-pencil"></i>
+					</button>
+                    <button class="btn btn-danger btn-sm"
+                        th:onclick="'eliminar(' + ${c.id} + ')'">
+                        <i class="bi bi-trash"></i>
+                    </button>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+
+<script src="https://code.jquery.com/jquery-3.7.0.min.js"></script>
+<script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
+<script src="https://cdn.datatables.net/1.13.6/js/dataTables.bootstrap5.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+<script>
+$(document).ready(function() {
+    $('#tabla').DataTable({
+        language: {
+            url: "//cdn.datatables.net/plug-ins/1.13.6/i18n/es-ES.json"
+        }
+    });
+});
+
+function eliminar(id) {
+    Swal.fire({
+        title: '¿Eliminar?',
+        text: 'No se puede deshacer',
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonText: 'Sí',
+        cancelButtonText: 'No'
+    }).then((r) => {
+        if (r.isConfirmed) {
+            window.location = '/clientes/eliminar/' + id;
+        }
+    });
+}
+function editar(id) {
+    Swal.fire({
+        title: '¿Deseas editar?',
+        text: 'Se abrirá el formulario de edición',
+        icon: 'question',
+        showCancelButton: true,
+        confirmButtonText: 'Sí, editar',
+        cancelButtonText: 'Cancelar'
+    }).then((r) => {
+        if (r.isConfirmed) {
+            window.location = '/clientes/editar/' + id;
+        }
+    });
+}
+
+</script>
+
+
+<!-- ALERTAS -->
+<script th:if="${mensaje}">
+Swal.fire({
+    icon: '[[${tipo}]]',
+    title: 'ALERTA',
+    text: '[[${mensaje}]]',
+    timer: 2000,
+    showConfirmButton: false
+});
+</script>
+
+</body>
+</html>
