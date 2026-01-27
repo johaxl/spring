@@ -16,8 +16,8 @@ public class ClienteService {
         return repo.findAll();
     }
 
-    public Cliente guardar(Cliente c) {
-        return repo.save(c);
+    public void guardar(Cliente c) {
+        repo.save(c);
     }
 
     public Cliente buscarPorId(Long id) {

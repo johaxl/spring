@@ -1,49 +1,66 @@
 package com.utc.bancario1.entity;
 
+import java.util.List;
+
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 
 @Entity
- // asi se cambia el nombre de la base de datos
-
-@Table(name="Clientes") //opcional
+@Table(name = "clientes")
 public class Cliente {
-	@Id
-	@GeneratedValue(strategy=GenerationType.IDENTITY)
-	private Long id;
-	private String nombre;
-	private String email;
-	
-	// constructor por defecto = vacio
-	public Cliente() {}
-	public Cliente(String n, String e) {
-		this.nombre=n;
-		this.email=e;
-	}	
-	public Long getId() {
-		return id;
-	}
 
-	public void setId(Long id) {
-		this.id = id;
-	}
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
 
-	public String getNombre() {
-		return nombre;
-	}
+    private String nombre;
+    private String email;
 
-	public void setNombre(String nombre) {
-		this.nombre = nombre;
-	}
+    @OneToMany(mappedBy = "cliente")
+    private List<Cuenta> cuentas;
 
-	public String getEmail() {
-		return email;
-	}
+    // Constructor vacío
+    public Cliente() {}
 
-	public void setEmail(String email) {
-		this.email = email;
-	}
+    public Cliente(String nombre, String email) {
+        this.nombre = nombre;
+        this.email = email;
+    }
+
+    // Getters y setters
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public String getNombre() {
+        return nombre;
+    }
+
+    public void setNombre(String nombre) {
+        this.nombre = nombre;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public List<Cuenta> getCuentas() {
+        return cuentas;
+    }
+
+    public void setCuentas(List<Cuenta> cuentas) {
+        this.cuentas = cuentas;
+    }
 }

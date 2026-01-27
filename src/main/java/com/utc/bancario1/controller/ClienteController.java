@@ -16,52 +16,49 @@ public class ClienteController {
     @Autowired
     private ClienteService service;
 
-    // INDEX
     @GetMapping
     public String index(Model model) {
         model.addAttribute("listaClientes", service.listar());
         return "clientes/index";
     }
 
-    // FORM NUEVO
     @GetMapping("/nuevo")
     public String nuevo(Model model) {
         model.addAttribute("cliente", new Cliente());
         return "clientes/agregar";
     }
 
-    // FORM EDITAR
     @GetMapping("/editar/{id}")
     public String editar(@PathVariable Long id, Model model) {
         model.addAttribute("cliente", service.buscarPorId(id));
         return "clientes/editar";
     }
 
-    // GUARDAR (nuevo y editar)
     @PostMapping("/guardar")
     public String guardar(@ModelAttribute Cliente c, RedirectAttributes ra) {
-
-        if (c.getId() == null) {
+        if(c.getId() == null){
             service.guardar(c);
-            ra.addFlashAttribute("mensaje", "Cliente registrado correctamente");
-            ra.addFlashAttribute("tipo", "success");
+            ra.addFlashAttribute("mensaje","Cliente registrado correctamente");
+            ra.addFlashAttribute("tipo","success");
         } else {
             service.guardar(c);
-            ra.addFlashAttribute("mensaje", "Cliente actualizado correctamente");
-            ra.addFlashAttribute("tipo", "info");
+            ra.addFlashAttribute("mensaje","Cliente actualizado correctamente");
+            ra.addFlashAttribute("tipo","info");
         }
-
         return "redirect:/clientes";
     }
 
-
-
-    // ELIMINAR
     @GetMapping("/eliminar/{id}")
-    public String eliminar(@PathVariable Long id, RedirectAttributes ra) {
+    public String eliminar(@PathVariable Long id, RedirectAttributes ra){
+        Cliente c = service.buscarPorId(id);
+        if(c.getCuentas() != null && !c.getCuentas().isEmpty()){
+            ra.addFlashAttribute("mensaje","No se puede eliminar este cliente porque tiene cuentas asociadas");
+            ra.addFlashAttribute("tipo","warning");
+            return "redirect:/clientes";
+        }
         service.eliminar(id);
-        ra.addFlashAttribute("mensaje", "Cliente eliminado correctamente");
-        ra.addFlashAttribute("tipo", "success");
+        ra.addFlashAttribute("mensaje","Cliente eliminado correctamente");
+        ra.addFlashAttribute("tipo","success");
         return "redirect:/clientes";
     }
 }
