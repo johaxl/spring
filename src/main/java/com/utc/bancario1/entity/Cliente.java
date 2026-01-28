@@ -19,6 +19,7 @@ public class Cliente {
 
     private String nombre;
     private String email;
+    private String cedula; 
 
     @OneToMany(mappedBy = "cliente")
     private List<Cuenta> cuentas;
@@ -26,9 +27,10 @@ public class Cliente {
     // Constructor vacío
     public Cliente() {}
 
-    public Cliente(String nombre, String email) {
+    public Cliente(String nombre, String email, String cedula) {
         this.nombre = nombre;
         this.email = email;
+        this.cedula = cedula;
     }
 
     // Getters y setters
@@ -54,6 +56,14 @@ public class Cliente {
 
     public void setEmail(String email) {
         this.email = email;
+    }
+
+    public String getCedula() {
+        return cedula;
+    }
+
+    public void setCedula(String cedula) {
+        this.cedula = cedula;
     }
 
     public List<Cuenta> getCuentas() {

@@ -34,27 +34,30 @@
         <a href="/clientes/nuevo" class="btn btn-dark"><i class="bi bi-plus-circle"></i> New</a>
     </div>
 
-    <table id="tabla" class="table table-striped">
-        <thead class="table-dark">
-            <tr>
-                <th>ID</th>
-                <th>Name</th>
-                <th>Email</th>
-                <th width="150">Actions</th>
-            </tr>
-        </thead>
-        <tbody>
-            <tr th:each="c : ${listaClientes}">
-                <td th:text="${c.id}"></td>
-                <td th:text="${c.nombre}"></td>
-                <td th:text="${c.email}"></td>
-                <td>
-                    <button class="btn btn-warning btn-sm" th:onclick="'edit(' + ${c.id} + ')'"><i class="bi bi-pencil"></i></button>
-                    <button class="btn btn-danger btn-sm" th:onclick="'deleteClient(' + ${c.id} + ')'"><i class="bi bi-trash"></i></button>
-                </td>
-            </tr>
-        </tbody>
-    </table>
+  <table id="tabla" class="table table-striped">
+    <thead class="table-dark">
+        <tr>
+            <th>ID</th>
+            <th>Name</th>
+            <th>Email</th>
+            <th>Cédula</th>
+            <th width="150">Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr th:each="c : ${listaClientes}">
+            <td th:text="${c.id}"></td>
+            <td th:text="${c.nombre}"></td>
+            <td th:text="${c.email}"></td>
+            <td th:text="${c.cedula}"></td>
+            <td>
+                <button class="btn btn-warning btn-sm" th:onclick="'edit(' + ${c.id} + ')'"><i class="bi bi-pencil"></i></button>
+                <button class="btn btn-danger btn-sm" th:onclick="'deleteClient(' + ${c.id} + ')'"><i class="bi bi-trash"></i></button>
+            </td>
+        </tr>
+    </tbody>
+</table>
+
 </div>
 
 <script src="https://code.jquery.com/jquery-3.7.0.min.js"></script>
